@@ -5,16 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "generate": "plop --plopfile internals/generators/index.js"
   },
   "keywords": [],
   "author": "Nuno Bettencourt",
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.3",
-    "mysql": "^2.13.0"
+    "fs": "0.0.1-security",
+    "mysql": "^2.13.0",
+    "path": "^0.12.7"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "plop": "^1.8.0"
   }
 }

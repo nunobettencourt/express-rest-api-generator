@@ -1,0 +1,22 @@
+/**
+ *
+ * {{ properCase name }} Model
+ *
+ */
+
+var db = require("../../dbConnection");
+
+var {{ camelCase name }} = {
+    getAll{{ properCase name }}s:function(callback){
+
+        return db.query("Select * from {{ camelCase name }}",callback);
+
+    },
+
+    get{{ properCase name }}ById:function(id,callback){
+
+        return db.query("select * from {{ camelCase name }} where {{ camelCase name }}_id=?",[id],callback);
+    }
+};
+
+module.exports = {{ camelCase name }};
