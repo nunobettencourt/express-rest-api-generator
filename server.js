@@ -5,8 +5,10 @@ var express = require("express"),
 var teams = require ("./api/routes/teamRoutes");
 var people = require("./api/routes/personRoutes");
 var role = require("./api/routes/roleRoutes");
+var event = require("./api/routes/eventRoutes");
 
 /* Routes */
+app.use('/event', event);
 app.use('/teams', teams);
 app.use('/people', people);
 app.use('/role', role);
