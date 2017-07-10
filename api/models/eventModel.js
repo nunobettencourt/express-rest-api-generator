@@ -19,9 +19,9 @@ var Event = {
     },
 
     addEvent:function(Event,callback){
-        //console.log(Event);
+
         return db.query(
-            "INSERT INTO event ('event_type_id', 'date', 'status') VALUES (?,?,?)",
+            "INSERT INTO event(event_type_id, date, status) VALUES (?,?,?)",
             [
                 Event.event_type_id,
                 Event.date,

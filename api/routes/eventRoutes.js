@@ -41,7 +41,7 @@ router.get('/:id?',function(req,res,next){
 });
 
 router.post('/',function(req,res,next){
-    console.log(req.body);
+
     Event.addEvent(req.body,function(err,count){
 
         if(err)
