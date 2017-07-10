@@ -6,13 +6,13 @@
 
 var express = require('express');
 var router = express.Router();
-var event = require('../models/eventModel');
+var Event = require('../models/eventModel');
 
 router.get('/:id?',function(req,res,next){
 
     if(req.params.id){
 
-        event.getEventById(req.params.id,function(err,rows){
+        Event.getEventById(req.params.id,function(err,rows){
 
             if(err)
             {
@@ -25,7 +25,7 @@ router.get('/:id?',function(req,res,next){
     }
     else{
 
-        event.getAllEvents(function(err,rows){
+        Event.getAllEvents(function(err,rows){
 
             if(err)
             {
@@ -38,6 +38,51 @@ router.get('/:id?',function(req,res,next){
 
         });
     }
+});
+
+router.post('/',function(req,res,next){
+    console.log(req.body);
+    Event.addEvent(req.body,function(err,count){
+
+        if(err)
+        {
+            res.json(err);
+        }
+        else{
+            res.json(req.body);//or return count for 1 & 0
+        }
+    });
+});
+
+router.delete('/:id',function(req,res,next){
+
+    Event.deleteEvent(req.params.id,function(err,count){
+
+        if(err)
+        {
+            res.json(err);
+        }
+        else
+        {
+            res.json(count);
+        }
+
+    });
+});
+
+router.put('/:id',function(req,res,next){
+
+    Event.updateEvent(req.params.id,req.body,function(err,rows){
+
+        if(err)
+        {
+            res.json(err);
+        }
+        else
+        {
+            res.json(rows);
+        }
+    });
 });
 
 module.exports=router;
