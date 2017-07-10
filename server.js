@@ -1,6 +1,18 @@
-var express = require("express"),
-    app = express(),
-    port = process.env.PORT || 3000;
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+const exphbs = require("express-handlebars");
+const expressValidator = require("express-validator");
+const flash = require("connect-flash");
+const session = require("express-session");
+const passport = require("passport");
+
+var app = express();
+var port = process.env.PORT || 3000;
+
+/* Body Parser Middleware */
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : false}));
 
 var teams = require ("./api/routes/teamRoutes");
 var people = require("./api/routes/personRoutes");
