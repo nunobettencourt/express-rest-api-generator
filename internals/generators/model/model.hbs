@@ -4,16 +4,16 @@
  *
  */
 
-var db = require("../../dbConnection");
+const db = require("../../dbConnection");
 
-var {{ camelCase name }} = {
-    getAll{{ properCase name }}s:function(callback){
+const {{ camelCase name }} = {
+    getAll{{ properCase name }}s:(callback) => {
 
         return db.query("Select * from {{ camelCase name }}",callback);
 
     },
 
-    get{{ properCase name }}ById:function(id,callback){
+    get{{ properCase name }}ById:(id,callback) => {
 
         return db.query("select * from {{ camelCase name }} where {{ camelCase name }}_id=?",[id],callback);
     }
