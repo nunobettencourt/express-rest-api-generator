@@ -4,11 +4,11 @@
  *
  */
 
-var express = require('express');
-var router = express.Router();
-var Event = require('../models/eventModel');
+const express = require('express');
+const router = express.Router();
+const Event = require('../models/eventModel');
 
-router.get('/:id?',function(req,res,next){
+router.get('/:id?',(req,res,next) => {
 
     if(req.params.id){
 
@@ -42,7 +42,7 @@ router.get('/:id?',function(req,res,next){
 
 router.post('/',function(req,res,next){
 
-    Event.addEvent(req.body,function(err,count){
+    Event.addEvent(req.body,(err,count) => {
 
         if(err)
         {
@@ -54,9 +54,9 @@ router.post('/',function(req,res,next){
     });
 });
 
-router.delete('/:id',function(req,res,next){
+router.delete('/:id',(req,res,next) => {
 
-    Event.deleteEvent(req.params.id,function(err,count){
+    Event.deleteEvent(req.params.id,(err,count) => {
 
         if(err)
         {
@@ -70,9 +70,9 @@ router.delete('/:id',function(req,res,next){
     });
 });
 
-router.put('/:id',function(req,res,next){
+router.put('/:id',(req,res,next) => {
 
-    Event.updateEvent(req.params.id,req.body,function(err,rows){
+    Event.updateEvent(req.params.id,req.body,(err,rows) => {
 
         if(err)
         {
