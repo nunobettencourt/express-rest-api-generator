@@ -4,16 +4,16 @@
  *
  */
 
-var db = require("../../dbConnection");
+const db = require("../../dbConnection");
 
-var role = {
-    getAllRoles:function(callback){
+const role = {
+    getAllRoles:(callback) => {
 
         return db.query("Select * from role",callback);
 
     },
 
-    getRoleById:function(id,callback){
+    getRoleById:(id,callback) => {
 
         return db.query("select * from role where role_id=?",[id],callback);
     }

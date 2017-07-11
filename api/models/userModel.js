@@ -7,13 +7,13 @@
 var db = require("../../dbConnection");
 
 var user = {
-    getAllUsers:function(callback){
+    getAllUsers:(callback) => {
 
         return db.query("Select * from user",callback);
 
     },
 
-    getUserById:function(id,callback){
+    getUserById:(id,callback) => {
 
         return db.query("select * from user where user_id=?",[id],callback);
     },
@@ -23,8 +23,8 @@ var user = {
             "INSERT INTO user(username, email, password) VALUES (?,?,?)",
             [
                 user.username,
-                Event.email,
-                Event.password
+                user.email,
+                user.password
             ],
             callback
         );

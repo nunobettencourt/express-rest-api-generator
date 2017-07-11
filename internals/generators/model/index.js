@@ -43,17 +43,7 @@ module.exports = {
             path: '../../server.js',
             pattern: /\W\n\/\*\sRoutes\s\*\//g,
             templateFile: './model/route.hbs'
-        }/*,{
-            type: 'modify',
-            path: 'folder/change-me.txt',
-            pattern: /(-- PREPEND ITEMS HERE --)/gi,
-            templateFile: 'templates/part.txt'
-        },{
-            type: 'modify',
-            path: 'folder/change-me.txt',
-            pattern: /## replace name here ##/gi,
-            template: 'replaced => {{dashCase name}}'
-        }*/];
+        }];
 
 
         return actions;

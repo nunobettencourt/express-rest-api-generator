@@ -12,7 +12,7 @@ router.get('/:id?',(req,res,next) => {
 
     if(req.params.id){
 
-        Event.getEventById(req.params.id,function(err,rows){
+        Event.getEventById(req.params.id,(err,rows) => {
 
             if(err)
             {
@@ -25,7 +25,7 @@ router.get('/:id?',(req,res,next) => {
     }
     else{
 
-        Event.getAllEvents(function(err,rows){
+        Event.getAllEvents((err,rows) => {
 
             if(err)
             {
@@ -40,16 +40,16 @@ router.get('/:id?',(req,res,next) => {
     }
 });
 
-router.post('/',function(req,res,next){
+router.post('/',(req,res,next) => {
 
-    Event.addEvent(req.body,(err,count) => {
+    Event.addEvent(req.body,(err) => {
 
         if(err)
         {
             res.json(err);
         }
         else{
-            res.json(req.body);//or return count for 1 & 0
+            res.json(req.body);
         }
     });
 });
