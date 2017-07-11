@@ -52,8 +52,10 @@ const teams = require ("./api/routes/teamRoutes");
 const people = require("./api/routes/personRoutes");
 const role = require("./api/routes/roleRoutes");
 const event = require("./api/routes/eventRoutes");
+const user = require("./api/routes/userRoutes");
 
 /* Routes */
+app.use('/user', user);
 app.use('/event', event);
 app.use('/teams', teams);
 app.use('/people', people);
