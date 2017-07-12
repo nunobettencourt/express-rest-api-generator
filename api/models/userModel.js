@@ -4,9 +4,10 @@
  *
  */
 
-var db = require("../../dbConnection");
+const db = require("../../dbConnection");
+const bcrypt = require("bcryptjs");
 
-var user = {
+const user = {
     getAllUsers:(callback) => {
 
         return db.query("Select * from user",callback);
@@ -19,15 +20,24 @@ var user = {
     },
 
     addUser: (user,callback) => {
-        return db.query(
-            "INSERT INTO user(username, email, password) VALUES (?,?,?)",
-            [
-                user.username,
-                user.email,
-                user.password
-            ],
-            callback
-        );
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(user.password, salt, (err, hash) => {
+                if(err) {
+                    console.log(err);
+                }
+                user.password = hash;
+                return db.query(
+                    "INSERT INTO user(username, email, password) VALUES (?,?,?)",
+                    [
+                        user.username,
+                        user.email,
+                        user.password
+                    ],
+                    callback
+                );
+            })
+        } );
+
     }
 };
 
