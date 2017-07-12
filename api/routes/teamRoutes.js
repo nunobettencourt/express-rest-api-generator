@@ -1,12 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var Team = require('../models/teamModel');
+const express = require('express');
+const router = express.Router();
+const Team = require('../models/teamModel');
 
-router.get('/:id?',function(req,res,next){
+router.get('/:id?',(req,res,next) => {
 
     if(req.params.id){
 
-        Team.getTeamById(req.params.id,function(err,rows){
+        Team.getTeamById(req.params.id,(err,rows) => {
 
             if(err)
             {
@@ -19,7 +19,7 @@ router.get('/:id?',function(req,res,next){
     }
     else{
 
-        Team.getAllTeams(function(err,rows){
+        Team.getAllTeams((err,rows) => {
 
             if(err)
             {
@@ -34,11 +34,11 @@ router.get('/:id?',function(req,res,next){
     }
 });
 
-router.get('/members/:id?',function(req,res,next){
+router.get('/members/:id?',(req,res,next) => {
 
     if(req.params.id){
 
-        Team.getTeamMembers(req.params.id,function(err,rows){
+        Team.getTeamMembers(req.params.id,(err,rows) => {
 
             if(err)
             {

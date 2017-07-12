@@ -1,18 +1,18 @@
 var db = require("../../dbConnection");
 
 var Team = {
-    getAllTeams:function(callback){
+    getAllTeams:(callback) => {
 
         return db.query("Select * from team",callback);
 
     },
 
-    getTeamById:function(id,callback){
+    getTeamById:(id,callback) => {
 
         return db.query("select * from team where team_id=?",[id],callback);
     },
 
-    getTeamMembers: function (id, callback) {
+    getTeamMembers:(id, callback) => {
 
         return db.query(
             "SELECT " +
