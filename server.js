@@ -1,9 +1,12 @@
 const express = require("express");
+const expressValidator = require("express-validator");
+
 const path = require("path");
 const bodyParser = require("body-parser");
-const expressValidator = require("express-validator");
+
 const flash = require("connect-flash");
 const session = require("express-session");
+
 const passport = require("passport");
 
 /* Init App */
@@ -22,6 +25,10 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
+
+//Init passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* Express Messages */
 app.use(require("connect-flash")());

@@ -6,13 +6,15 @@
 
 const express = require('express');
 const router = express.Router();
-const user = require('../models/userModel');
+const User = require('../models/userModel');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 router.get('/:id?',(req,res,next) => {
 
     if(req.params.id){
 
-        user.getUserById(req.params.id,(err,rows) => {
+        User.getUserById(req.params.id,(err,rows) => {
 
             if(err)
             {
@@ -25,7 +27,7 @@ router.get('/:id?',(req,res,next) => {
     }
     else{
 
-        user.getAllUsers((err,rows) => {
+        User.getAllUsers((err,rows) => {
 
             if(err)
             {
@@ -57,7 +59,7 @@ router.post('/register', (req, res, next) => {
    if(errors){
        res.json(errors)
    } else {
-       user.addUser(req.body,function(err,count){
+       User.addUser(req.body,(err) => {
            if(err)
            {
                res.json(err);
@@ -69,4 +71,44 @@ router.post('/register', (req, res, next) => {
    }
 });
 
-module.exports=router;
+// Local Strategy
+passport.use(new LocalStrategy((username, password, done) => {
+
+    User.getUserByUsername(username, (err, user) => {
+
+        if(err) throw err;
+        if(!user){
+            return done(null, false, {message: 'No user found'});
+        }
+
+        User.comparePassword(password, user[0].password, (err, isMatch) => {
+            if(err) throw err;
+            if(isMatch){
+                return done(null, user);
+            } else {
+                return done(null, false, {message: 'Wrong Password'});
+            }
+        });
+    });
+}));
+
+passport.serializeUser((user, done) => {
+    done(null, user[0].user_id);
+});
+
+passport.deserializeUser((id, done) => {
+    User.getUserById(id, (err, user) => {
+        done(err, user);
+    });
+});
+
+// Login Processing
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect:'/',
+        failureRedirect:'/login',
+        failureFlash: true
+    })(req, res, next);
+});
+
+module.exports = router;

@@ -7,7 +7,7 @@
 const db = require("../../dbConnection");
 const bcrypt = require("bcryptjs");
 
-const user = {
+const User = {
     getAllUsers:(callback) => {
 
         return db.query("Select * from user",callback);
@@ -17,6 +17,21 @@ const user = {
     getUserById:(id,callback) => {
 
         return db.query("select * from user where user_id=?",[id],callback);
+    },
+
+    getUserByUsername: (username, callback) => {
+
+        return db.query("select * from user where username=?", [username], callback);
+    },
+
+    comparePassword: (candidatePassword, hash, callback) => {
+        bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+            if(err) {
+                console.log(err)
+            } else {
+                callback(null, isMatch)
+            }
+        });
     },
 
     addUser: (user,callback) => {
@@ -41,4 +56,4 @@ const user = {
     }
 };
 
-module.exports = user;
+module.exports = User;
