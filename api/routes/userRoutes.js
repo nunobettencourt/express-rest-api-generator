@@ -8,9 +8,9 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/userModel');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 
-router.get('/:id?',(req,res,next) => {
+
+router.get('/:id?', passport.authenticate('jwt', { session: false}), (req,res,next) => {
 
     if(req.params.id){
 
@@ -71,44 +71,35 @@ router.post('/register', (req, res, next) => {
    }
 });
 
-// Local Strategy
-passport.use(new LocalStrategy((username, password, done) => {
+// route to authenticate a user (POST http://localhost:3000/user/login)
+router.post('/login', function(req, res) {
+
+    let username = req.body.username;
+    let password = req.body.password;
 
     User.getUserByUsername(username, (err, user) => {
 
         if(err) throw err;
         if(!user){
-            return done(null, false, {message: 'No user found'});
+            res.send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+
+            User.comparePassword(req.body.password, user[0].password, (err, isMatch) => {
+                if(err) throw err;
+                if (isMatch && !err) {
+                    // if user is found and password is right create a token
+                    let token = jwt.encode(user, config.jwtSecret);
+                    // return the information including token as JSON
+                    res.json({success: true, token: 'JWT ' + token});
+                } else {
+                    res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+                }
+            });
+
         }
-
-        User.comparePassword(password, user[0].password, (err, isMatch) => {
-            if(err) throw err;
-            if(isMatch){
-                return done(null, user);
-            } else {
-                return done(null, false, {message: 'Wrong Password'});
-            }
-        });
     });
-}));
 
-passport.serializeUser((user, done) => {
-    done(null, user[0].user_id);
 });
 
-passport.deserializeUser((id, done) => {
-    User.getUserById(id, (err, user) => {
-        done(err, user);
-    });
-});
-
-// Login Processing
-router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect:'/',
-        failureRedirect:'/login',
-        failureFlash: true
-    })(req, res, next);
-});
 
 module.exports = router;

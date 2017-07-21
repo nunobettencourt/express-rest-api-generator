@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Team = require('../models/teamModel');
+const passport = require('passport');
 
-router.get('/:id?',(req,res,next) => {
+router.get('/:id?', passport.authenticate('jwt', { session: false}), (req,res,next) => {
 
     if(req.params.id){
 
@@ -34,7 +35,7 @@ router.get('/:id?',(req,res,next) => {
     }
 });
 
-router.get('/members/:id?',(req,res,next) => {
+router.get('/members/:id?', passport.authenticate('jwt', { session: false}), (req,res,next) => {
 
     if(req.params.id){
 

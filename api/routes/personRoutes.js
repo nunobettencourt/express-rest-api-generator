@@ -1,8 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var Person = require('../models/personModel');
+const express = require('express');
+const router = express.Router();
+const Person = require('../models/personModel');
+const passport = require('passport');
 
-router.get('/:id?',(req,res,next) => {
+router.get('/:id?', passport.authenticate('jwt', { session: false}), (req,res,next) => {
 
     if(req.params.id){
 

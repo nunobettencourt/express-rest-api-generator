@@ -1,6 +1,6 @@
-var db = require("../../dbConnection");
+const db = require("../../dbConnection");
 
-var Person = {
+const Person = {
     getAllPeople:function(callback){
 
         return db.query("Select * from person",callback);

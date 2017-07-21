@@ -4,9 +4,9 @@
  *
  */
 
-var db = require("../../dbConnection");
+const db = require("../../dbConnection");
 
-var Event = {
+const Event = {
     getAllEvents:(callback) => {
 
         return db.query("Select * from event",callback);
