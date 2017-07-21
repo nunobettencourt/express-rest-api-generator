@@ -7,7 +7,10 @@ const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 const session = require("express-session");
 
+const jwt = require('jwt-simple');
+
 const passport = require("passport");
+require("./api/config/passport")(passport);
 
 /* Init App */
 const app = express();
@@ -60,8 +63,10 @@ const people = require("./api/routes/personRoutes");
 const role = require("./api/routes/roleRoutes");
 const event = require("./api/routes/eventRoutes");
 const user = require("./api/routes/userRoutes");
+const pregnancy = require("./api/routes/pregnancyRoutes");
 
 /* Routes */
+app.use('/pregnancy', pregnancy);
 app.use('/user', user);
 app.use('/event', event);
 app.use('/teams', teams);
